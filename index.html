@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <!-- web3.js 1.0.0 -->
+    <script
+      src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"
+      integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Create Your Campaign</title>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Create Your Campaign</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 order-md-2">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span>Detail of your Campaign</span>
+          </h4>
+          <div class="card d-flex px-5 py-5">
+            <div class="card-body py-5">
+              <h1 class="card-title text-center mb-5">
+                Campaign Overview
+              </h1>
+              <div class="card-text">
+                <p class="text-muted">Name</p>
+                <h5 id="name"></h5>
+                <p class="text-muted">Type</p>
+                <h5><span id="level"></span></h5>
+                <p>Cause</p>
+                <h5 id="cause"></h5>
+                <p class="text-muted">Amount</p>
+                <h5 id="amountt"></h5>
+                <p class="text-right mt-5">
+                  <img
+                    src="https://www.oumedicine.com/images/ou-physicians/livetogive.jpg?sfvrsn=0"
+                    alt=""
+                    style="width: 180px;"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 order-md-1">
+          <h4 class="text-muted">Input the detail of Campaign</h4>
+          <div class="mb-3">
+            <label for="username">Campaign Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fullName"
+              placeholder="Campaign Name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="username">Campaign Type</label>
+            <input
+              type="text"
+              class="form-control"
+              id="levelOfStudy"
+              placeholder="Campaign Type"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="comment">Campaign Cause</label>
+            <textarea
+              class="form-control"
+              id="Cause"
+              name="text"
+              placeholder="Campaign Cause"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="username">Minimum Amount</label>
+            <input
+              type="text"
+              class="form-control"
+              id="amount"
+              placeholder="Minimum Amount"
+              required
+            />
+          </div>
+
+          <hr class="mb-4" />
+          <button id="button" class="btn btn-primary btn-lg btn-block">
+            Register
+          </button>
+        </div>
+      </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019</p>
+      </footer>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Input our code here
+      if (typeof web3 !== "undefined") {
+        web3 = new Web3(web3.currentProvider);
+      } else {
+        // Set the provider you want from Web3.providers
+        web3 = new Web3(
+          new Web3.providers.HttpProvider("http://localhost:7545")
+        );
+      }
+      var abi = [
+        {
+          constant: false,
+          inputs: [
+            {
+              name: "_name",
+              type: "string"
+            },
+            {
+              name: "_level",
+              type: "string"
+            },
+            {
+              name: "_cause",
+              type: "string"
+            },
+            {
+              name: "_amount",
+              type: "string"
+            }
+          ],
+          name: "setCertificate",
+          outputs: [],
+          payable: false,
+          stateMutability: "nonpayable",
+          type: "function"
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              name: "name",
+              type: "string"
+            },
+            {
+              indexed: false,
+              name: "level",
+              type: "string"
+            },
+            {
+              indexed: false,
+              name: "cause",
+              type: "string"
+            },
+            {
+              indexed: false,
+              name: "amount",
+              type: "string"
+            }
+          ],
+          name: "Certificate",
+          type: "event"
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "amount",
+          outputs: [
+            {
+              name: "",
+              type: "string"
+            }
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function"
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "cause",
+          outputs: [
+            {
+              name: "",
+              type: "string"
+            }
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function"
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "getCertificate",
+          outputs: [
+            {
+              name: "",
+              type: "string"
+            },
+            {
+              name: "",
+              type: "string"
+            },
+            {
+              name: "",
+              type: "string"
+            },
+            {
+              name: "",
+              type: "string"
+            }
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function"
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "level",
+          outputs: [
+            {
+              name: "",
+              type: "string"
+            }
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function"
+        },
+        {
+          constant: true,
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              name: "",
+              type: "string"
+            }
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function"
+        }
+      ];
+
+      var contractAddress = "0xbc11a4ba71574f33a23ce607d5941829fa987b76";
+      async function init() {
+        Hashcademy = await new web3.eth.Contract(abi, contractAddress);
+        var accounts = await web3.eth.getAccounts();
+        web3.eth.defaultAccount = accounts[4];
+      }
+      init();
+
+      async function register() {
+        var fullName = document.getElementById("fullName").value;
+        var levelOfStudy = document.getElementById("levelOfStudy").value;
+        var Cause = document.getElementById("Cause").value;
+        var amount = document.getElementById("amount").value;
+
+        Hashcademy.methods
+          .setCertificate(fullName, levelOfStudy, Cause, amount)
+          .send({ from: web3.eth.defaultAccount })
+          .on("receipt", function(receipt) {
+            document.getElementById("name").textContent =
+              receipt.events.Certificate.returnValues.name;
+            document.getElementById("level").textContent =
+              receipt.events.Certificate.returnValues.level;
+            document.getElementById("cause").textContent =
+              receipt.events.Certificate.returnValues.cause;
+            document.getElementById("amountt").textContent =
+              receipt.events.Certificate.returnValues.amount;
+          });
+      }
+      document.getElementById("button").addEventListener("click", register);
+    </script>
+  </body>
+</html>
